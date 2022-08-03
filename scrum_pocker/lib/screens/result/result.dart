@@ -1,31 +1,24 @@
 import 'package:flutter/material.dart';
 import 'package:scrum_pocker/components/constrains.dart';
-import 'voter_card.dart';
+import 'package:scrum_pocker/screens/cards/body.dart';
 import 'package:scrum_pocker/models/voters.dart';
-import 'package:stop_watch_timer/stop_watch_timer.dart';
 
-class Body extends StatefulWidget {
-  @override
-  State<Body> createState() => _BodyState();
-}
-
-class _BodyState extends State<Body> {
-  final StopWatchTimer _stopWatchTimer = StopWatchTimer();
-  final _isHours = true;
-
+class Result extends StatelessWidget {
+  static String routeName = "/result";
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
+     return Container(
+      decoration: BoxDecoration(
+        color: kPrimaryColor
+      ),
       child: SingleChildScrollView(
         child: Column(
-          
           children: [
             SizedBox(height: 10),
             Row(
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
                 Icon( Icons.alarm, color: Colors.grey, size: 20,),
-                SizedBox(width: 5),
                 // StreamBuilder<int>(builder: (context, snapshot) {
                 //   stream: _stopWatchTimer.rawTime;
                 //   initialData: _stopWatchTimer.rawTime.value;
@@ -34,9 +27,11 @@ class _BodyState extends State<Body> {
                 //   final displaytime = StopWatchTimer.getDisplayTime(value, hours: _isHours);
                 //   return Text(displaytime, style: TextStyle(fontSize: 20, color: Colors.grey));
                 // }),
-                Icon ( Icons.clear_rounded, color: kPrimaryButtonColor, size: 20,),
-                SizedBox(width: 5),
-                Text ( 'Quit', style: TextStyle(fontSize: 20, color: kPrimaryButtonColor),),
+                TextButton ( 
+                  onPressed: () { Navigator.pushNamed(context, 'room'); },
+                  child: Icon(Icons.clear_rounded, color: kPrimaryButtonColor, size: 20,)
+                ),
+                Text ( 'Quit', style: TextStyle(fontSize: 20, color: kPrimaryButtonColor, fontWeight: FontWeight.normal)),
                 SizedBox(width: 5)
               ],
             ),
@@ -57,38 +52,25 @@ class _BodyState extends State<Body> {
               ),
             ),
             SizedBox(height: 15),
-            ElevatedButton(
-              onPressed: (){
-                Navigator.pushNamed(context, 'cards');
-              },
-              style: ElevatedButton.styleFrom(
-                primary: kPrimaryButtonColor,
-                surfaceTintColor: kPrimaryButtonColor,
-                minimumSize: Size(300, 55),
-                padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
-                shape:RoundedRectangleBorder(
+            Container(
+              width: MediaQuery.of(context).size.width/2,
+              height: MediaQuery.of(context).size.height/3,
+                padding: EdgeInsets.all(10),
+                decoration: BoxDecoration(
+                  color: kPrimaryVoteColor,
                   borderRadius: BorderRadius.circular(10),
-                )
+                ),
+                child: Container(
+                  alignment: Alignment.center,
+                  child: RichText(
+                    text: TextSpan(
+                      text: iResult().toString(),
+                      style: TextStyle(color: Colors.white, fontSize: 26, fontWeight: FontWeight.bold),
+                    ),
+                  ),
+                ),
               ),
-              child: const Text(
-                'Start voting',
-                style: TextStyle(fontSize: 14, color: Colors.white),
-              )
-            ),
-            SizedBox(height: 15),
-            GridView.builder(
-              padding: EdgeInsets.all(50),
-              physics: NeverScrollableScrollPhysics(),
-              shrinkWrap: true,
-              itemCount: demoVoters.length,
-              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: 2,
-                mainAxisSpacing: 10,
-              ),
-              itemBuilder: (context, index){
-                return VoterCard(voter: demoVoters[index]);
-              }
-            ),
+        
             SizedBox(height: 15),
             // Container(
             //   padding: EdgeInsets.all(10),
@@ -100,4 +82,16 @@ class _BodyState extends State<Body> {
       ),
     );
   }
+}
+
+double iResult() {
+  double res = 0;
+  for (int i = 0; i < demoVoters.length; i++){
+    if(demoVoters.elementAt(i).vote == '?'){
+      res += 0;
+    }else{
+      res += int.parse(demoVoters.elementAt(i).vote);
+    }
+  }
+  return res/demoVoters.length;
 }
