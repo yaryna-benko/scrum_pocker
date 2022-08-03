@@ -87,11 +87,11 @@ class _BodyState extends State<Body> {
               }
             ),
             SizedBox(height: 15),
-            Container(
-              padding: EdgeInsets.all(10),
-              width: MediaQuery.of(context).size.width / 3,
-              child:  Image.asset('assets/icons/logo.png'),
-            )
+            // Container(
+            //   padding: EdgeInsets.all(10),
+            //   width: MediaQuery.of(context).size.width / 3,
+            //   child:  Image.asset('assets/icons/logo.png'),
+            // )
           ],
         ),
       ),
