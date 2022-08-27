@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:scrum_pocker/components/constrains.dart';
 import 'package:scrum_pocker/screens/cards/body.dart';
 import 'package:scrum_pocker/models/voters.dart';
+import 'package:scrum_pocker/screens/room/components/voter_card.dart';
 
 class Result extends StatelessWidget {
   static String routeName = "/result";
@@ -70,7 +71,20 @@ class Result extends StatelessWidget {
                   ),
                 ),
               ),
-        
+            SizedBox(height: 15),
+            GridView.builder(
+              padding: EdgeInsets.all(50),
+              physics: NeverScrollableScrollPhysics(),
+              shrinkWrap: true,
+              itemCount: demoVoters.length,
+              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                crossAxisCount: 2,
+                mainAxisSpacing: 10,
+              ),
+              itemBuilder: (context, index){
+                return VoterCard(voter: demoVoters[index]);
+              }
+            ),
             SizedBox(height: 15),
             // Container(
             //   padding: EdgeInsets.all(10),
