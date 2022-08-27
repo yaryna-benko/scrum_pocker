@@ -4,7 +4,7 @@ import 'card_card.dart';
 import 'package:scrum_pocker/models/cards.dart';
 import 'package:scrum_pocker/screens/room/room.dart';
 
-class Body extends StatelessWidget {
+class CBody extends StatelessWidget {
   static String routeName = "/cards";
   @override
   Widget build(BuildContext context) {
