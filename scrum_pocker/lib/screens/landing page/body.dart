@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:scrum_pocker/components/constrains.dart';
+import 'package:scrum_pocker/components/api_service.dart';
+import 'package:scrum_pocker/models/room.dart';
 import 'package:stop_watch_timer/stop_watch_timer.dart';
-import 'package:scrum_pocker/screens/room/room.dart';
 
 class HBody extends StatefulWidget {
   @override
@@ -12,8 +13,19 @@ class _BodyState extends State<HBody> {
   final StopWatchTimer _stopWatchTimer = StopWatchTimer();
   final _isHours = true;
   bool checkedValue = false;
+  Future<VRoom>? _futureRoom;
 
   @override
+  // Future<void> _createVRoom() async {
+  //     VRoom new_room = VRoom(id: 6, room_number: '9051a', scrummaster: 44, lifetime: 11000);
+      
+  //       // Navigator.push(
+  //       //   context,
+  //       //   MaterialPageRoute(builder: (context) =>  HomePage()),
+  //       // );
+  //   }
+
+
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: kPrimaryColor,
@@ -68,8 +80,8 @@ class _BodyState extends State<HBody> {
                   ),),
             SizedBox(height: 15),
             ElevatedButton(
-              onPressed: (){
-                
+              onPressed: () async{
+                final VRoom new_room = await createVRoom(6);
                 Navigator.pushNamed(context, 'room');
               },
               style: ElevatedButton.styleFrom(
