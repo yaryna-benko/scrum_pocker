@@ -16,7 +16,7 @@ class _BodyState extends State<Body> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.transparent,
+      backgroundColor: kPrimaryColor,
       body: SingleChildScrollView(
         child: Column(   
           children: [
@@ -86,23 +86,23 @@ class _BodyState extends State<Body> {
               )
             ),
             SizedBox(height: 15),
-            Container(
-              padding: EdgeInsets.all(10.0),
-              child: Column(
-                children: <Widget>[
-                  CheckboxListTile(
-                    title: Text("I'm a SCRUM Master"),
-                    value: checkedValue,
-                    onChanged: (newValue) {
-                      setState(() {
-                        checkedValue = !checkedValue;
-                      });
-                    },
-                    controlAffinity: ListTileControlAffinity.leading,  //  <-- leading Checkbox
-                  )
-                  ],
-              ),
-            ),
+            // Container(
+            //   padding: EdgeInsets.all(10.0),
+            //   child: Column(
+            //     children: <Widget>[
+            //       CheckboxListTile(
+            //         title: Text("I'm a SCRUM Master"),
+            //         value: checkedValue,
+            //         onChanged: (newValue) {
+            //           setState(() {
+            //             checkedValue = !checkedValue;
+            //           });
+            //         },
+            //         controlAffinity: ListTileControlAffinity.leading,  //  <-- leading Checkbox
+            //       )
+            //       ],
+            //   ),
+            // ),
             SizedBox(height: 15),
             // Container(
             //   padding: EdgeInsets.all(10),

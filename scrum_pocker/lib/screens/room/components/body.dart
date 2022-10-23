@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:scrum_pocker/components/constrains.dart';
 import 'voter_card.dart';
 import 'package:scrum_pocker/models/voters.dart';
+import 'package:scrum_pocker/components/api_service.dart';
 import 'package:stop_watch_timer/stop_watch_timer.dart';
 
 class Body extends StatefulWidget {
@@ -12,8 +13,19 @@ class Body extends StatefulWidget {
 class _BodyState extends State<Body> {
   final StopWatchTimer _stopWatchTimer = StopWatchTimer();
   final _isHours = true;
+  late List<Voter>? _voters = []; 
 
   @override
+  void initState(){
+    super.initState();
+    _getData();
+  }
+
+  void _getData() async {
+    _voters = (await ApiService().getUsers())!;
+   //Future.delayed(const Duration(seconds: 1)).then((value) => setState(() {}));
+  }
+
   Widget build(BuildContext context) {
     return SafeArea(
       child: SingleChildScrollView(
@@ -76,17 +88,42 @@ class _BodyState extends State<Body> {
               )
             ),
             SizedBox(height: 15),
+            // FutureBuilder<List<MyVoters>>(
+            //   future: products, builder: (context, snapshot) {
+            //     if (snapshot.hasData) {
+            //     return VotersGrid(items: snapshot.data!);
+            //   } else if (snapshot.hasError) {
+            //     return Text('${snapshot.error}');
+            //   }
+            //   return const CircularProgressIndicator();
+            // },),
             GridView.builder(
               padding: EdgeInsets.all(50),
               physics: NeverScrollableScrollPhysics(),
               shrinkWrap: true,
-              itemCount: demoVoters.length,
+              itemCount: _voters!.length,
               gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                 crossAxisCount: 2,
                 mainAxisSpacing: 10,
               ),
               itemBuilder: (context, index){
-                return VoterCard(voter: demoVoters[index]);
+                return Card(
+                  child: Column(
+                    children: [
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: [
+                          Text(_voters![index].id.toString()),
+                          Text(_voters![index].name),
+                        ],
+                      ),
+                      const SizedBox(
+                        height: 20.0,
+                      ),
+                    ],
+                  ),
+                );
+                // return VoterCard(voters: _voters![index]);
               }
             ),
             SizedBox(height: 15),
@@ -101,3 +138,26 @@ class _BodyState extends State<Body> {
     );
   }
 }
+
+
+// class VotersGrid extends StatelessWidget{
+//   final List<MyVoters> items; 
+//    VotersGrid({Key? key, required this.items}) : super(key: key); 
+
+//    @override 
+//    Widget build(BuildContext context){
+//     return GridView.builder(
+//       padding: EdgeInsets.all(50),
+//       physics: NeverScrollableScrollPhysics(),
+//       shrinkWrap: true,
+//       itemCount: items.length,
+//       gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+//         crossAxisCount: 2,
+//         mainAxisSpacing: 10,
+//       ),
+//       itemBuilder: (context, index){
+//         return VoterCard(voter: items[index]);
+//       }
+//     );
+//    } 
+// }

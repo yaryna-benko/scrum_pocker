@@ -3,10 +3,30 @@ import 'package:scrum_pocker/components/constrains.dart';
 import 'package:scrum_pocker/screens/cards/body.dart';
 import 'package:scrum_pocker/models/voters.dart';
 import 'package:scrum_pocker/screens/room/components/voter_card.dart';
+import 'package:scrum_pocker/components/api_service.dart';
 
-class Result extends StatelessWidget {
+class Result extends StatefulWidget {
   static String routeName = "/result";
+
   @override
+  State<Result> createState() => _ResultState();
+}
+
+class _ResultState extends State<Result> {
+  List<Voter>? _voters = []; 
+
+  @override
+
+  void initState(){
+    super.initState();
+    _getData();
+  }
+
+  void _getData() async {
+    _voters = (await ApiService().getUsers())!;
+    Future.delayed(const Duration(seconds: 1)).then((value) => setState(() {}));
+  }
+
   Widget build(BuildContext context) {
      return Container(
       decoration: BoxDecoration(
@@ -65,7 +85,7 @@ class Result extends StatelessWidget {
                   alignment: Alignment.center,
                   child: RichText(
                     text: TextSpan(
-                      text: iResult().toString(),
+                      //text: iResult().toString(),
                       style: TextStyle(color: Colors.white, fontSize: 26, fontWeight: FontWeight.bold),
                     ),
                   ),
@@ -76,13 +96,13 @@ class Result extends StatelessWidget {
               padding: EdgeInsets.all(50),
               physics: NeverScrollableScrollPhysics(),
               shrinkWrap: true,
-              itemCount: demoVoters.length,
+              itemCount: _voters!.length,
               gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                 crossAxisCount: 2,
                 mainAxisSpacing: 10,
               ),
               itemBuilder: (context, index){
-                return VoterCard(voter: demoVoters[index]);
+                return VoterCard(voters: _voters![index]);
               }
             ),
             SizedBox(height: 15),
@@ -98,14 +118,14 @@ class Result extends StatelessWidget {
   }
 }
 
-double iResult() {
-  double res = 0;
-  for (int i = 0; i < demoVoters.length; i++){
-    if(demoVoters.elementAt(i).vote == '?'){
-      res += 0;
-    }else{
-      res += int.parse(demoVoters.elementAt(i).vote);
-    }
-  }
-  return res/demoVoters.length;
-}
+// double iResult() {
+//   double res = 0;
+//   for (int i = 0; i < demoVoters.length; i++){
+//     if(demoVoters.elementAt(i).vote == '?'){
+//       res += 0;
+//     }else{
+//       res += int.parse(demoVoters.elementAt(i).vote);
+//     }
+//   }
+//   return res/demoVoters.length;
+// }
