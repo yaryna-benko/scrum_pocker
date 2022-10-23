@@ -8,17 +8,19 @@ import 'package:scrum_pocker/models/voters.dart';
 
 class ApiService {
   Future<List<Voter>?> getUsers() async {
-    try {
-      var url = Uri.parse(ApiConstants.baseUrl + ApiConstants.usersEndpoint);
-      final response = await http.get( url,);
+    // try {
+      var url = Uri.parse('http://192.168.1.3:9654/api/v1/users/inroom/1');
+      var response = await http.get(url);
       if (response.statusCode == 200) {
         List<Voter> _model = VoterFromJson(response.body);
         return _model;
+      }else {
+        log('message');
       }
-    } catch (e) {
-      log('boo');
-      // log(e.toString());
-    }
+    // } catch (e) {
+    //   log('boo');
+    //   // log(e.toString());
+    // }
   }
 }
 
