@@ -46,7 +46,11 @@ class _BodyState extends State<Body> {
                 //   final displaytime = StopWatchTimer.getDisplayTime(value, hours: _isHours);
                 //   return Text(displaytime, style: TextStyle(fontSize: 20, color: Colors.grey));
                 // }),
-                Icon ( Icons.clear_rounded, color: kPrimaryButtonColor, size: 20,),
+                // Icon ( Icons.clear_rounded, color: kPrimaryButtonColor, size: 20,),
+                TextButton ( 
+                  onPressed: () { Navigator.pushNamed(context, 'home'); },
+                  child: Icon(Icons.clear_rounded, color: kPrimaryButtonColor, size: 20,)
+                ),
                 SizedBox(width: 5),
                 Text ( 'Quit', style: TextStyle(fontSize: 20, color: kPrimaryButtonColor),),
                 SizedBox(width: 5)

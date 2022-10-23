@@ -49,7 +49,7 @@ class _ResultState extends State<Result> {
                 //   return Text(displaytime, style: TextStyle(fontSize: 20, color: Colors.grey));
                 // }),
                 TextButton ( 
-                  onPressed: () { Navigator.pushNamed(context, 'room'); },
+                  onPressed: () { Navigator.pushNamed(context, 'home'); },
                   child: Icon(Icons.clear_rounded, color: kPrimaryButtonColor, size: 20,)
                 ),
                 Text ( 'Quit', style: TextStyle(fontSize: 20, color: kPrimaryButtonColor, fontWeight: FontWeight.normal)),

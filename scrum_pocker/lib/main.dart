@@ -29,11 +29,12 @@ class _MyAppState extends State<MyApp> {
         primaryColor: kPrimaryColor,
         scaffoldBackgroundColor: kPrimaryColor,
       ),
-      home:  Body(),
+      home:  HBody(),
       routes: {
           'cards': (context) => CBody(),
           'room': (context) =>  Room(),
           'result': (context) =>  Result(),
+          'home': (context) => HBody(),
         }
     );
   }

@@ -3,12 +3,12 @@ import 'package:scrum_pocker/components/constrains.dart';
 import 'package:stop_watch_timer/stop_watch_timer.dart';
 import 'package:scrum_pocker/screens/room/room.dart';
 
-class Body extends StatefulWidget {
+class HBody extends StatefulWidget {
   @override
-  State<Body> createState() => _BodyState();
+  State<HBody> createState() => _BodyState();
 }
 
-class _BodyState extends State<Body> {
+class _BodyState extends State<HBody> {
   final StopWatchTimer _stopWatchTimer = StopWatchTimer();
   final _isHours = true;
   bool checkedValue = false;
@@ -24,10 +24,10 @@ class _BodyState extends State<Body> {
             Row(
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
-                Icon ( Icons.clear_rounded, color: kPrimaryButtonColor, size: 20,),
-                SizedBox(width: 5),
-                Text ( 'Quit', style: TextStyle(fontSize: 20, color: kPrimaryButtonColor, fontWeight: FontWeight.normal),),
-                SizedBox(width: 5)
+                // Icon ( Icons.clear_rounded, color: kPrimaryButtonColor, size: 20,),
+                // SizedBox(width: 5),
+                // Text ( 'Quit', style: TextStyle(fontSize: 20, color: kPrimaryButtonColor, fontWeight: FontWeight.normal),),
+                // SizedBox(width: 5)
               ],
             ),
             SizedBox(height: 15),
@@ -69,6 +69,7 @@ class _BodyState extends State<Body> {
             SizedBox(height: 15),
             ElevatedButton(
               onPressed: (){
+                
                 Navigator.pushNamed(context, 'room');
               },
               style: ElevatedButton.styleFrom(
