@@ -14,6 +14,7 @@ class _BodyState extends State<HBody> {
   final _isHours = true;
   bool checkedValue = false;
   Future<VRoom>? _futureRoom;
+   final TextEditingController _controller = TextEditingController();
 
   @override
   // Future<void> _createVRoom() async {
@@ -53,18 +54,41 @@ class _BodyState extends State<HBody> {
               ),
             ),
             SizedBox(height: 15),
-            SizedBox(width: MediaQuery.of(context).size.width / 3,
-            child: TextField(
-              cursorWidth: MediaQuery.of(context).size.width / 3,
-                    decoration: InputDecoration(
-                      contentPadding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
+            Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                TextField(
+                  controller: _controller,
+                  decoration: const InputDecoration(
+                    hintText: 'Enter room number',
+                    contentPadding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
                     fillColor: Colors.white,
                     filled: true,
-                    hintText: "Your nickname",
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(40),
-                    )),
-                  ),),
+                    // border: borderRadius: BorderRadius.circular(40),
+                    ),
+                ),
+                ElevatedButton(
+                onPressed: () {
+                  setState(() {
+                  _futureRoom = createVRoom(_controller.text);
+                });
+                },
+                child: const Text('Create Data'),
+              ),
+            ],
+          ),
+            // SizedBox(width: MediaQuery.of(context).size.width / 3,
+            // child: TextField(
+            //   cursorWidth: MediaQuery.of(context).size.width / 3,
+            //         decoration: InputDecoration(
+            //           contentPadding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
+            //         fillColor: Colors.white,
+            //         filled: true,
+            //         hintText: "Your nickname",
+            //         border: OutlineInputBorder(
+            //           borderRadius: BorderRadius.circular(40),
+            //         )),
+            //       ),),
             SizedBox(height: 15),
             SizedBox(width: MediaQuery.of(context).size.width / 3,
             child: TextField(
@@ -81,7 +105,7 @@ class _BodyState extends State<HBody> {
             SizedBox(height: 15),
             ElevatedButton(
               onPressed: () async{
-                final VRoom new_room = await createVRoom(6);
+                //final VRoom new_room = await createVRoom(7);
                 Navigator.pushNamed(context, 'room');
               },
               style: ElevatedButton.styleFrom(

@@ -23,7 +23,7 @@ class _BodyState extends State<Body> {
 
   void _getData() async {
     _voters = (await ApiService().getUsers())!;
-   //Future.delayed(const Duration(seconds: 1)).then((value) => setState(() {}));
+   Future.delayed(const Duration(seconds: 1)).then((value) => setState(() {}));
   }
 
   Widget build(BuildContext context) {
@@ -92,15 +92,6 @@ class _BodyState extends State<Body> {
               )
             ),
             SizedBox(height: 15),
-            // FutureBuilder<List<MyVoters>>(
-            //   future: products, builder: (context, snapshot) {
-            //     if (snapshot.hasData) {
-            //     return VotersGrid(items: snapshot.data!);
-            //   } else if (snapshot.hasError) {
-            //     return Text('${snapshot.error}');
-            //   }
-            //   return const CircularProgressIndicator();
-            // },),
             GridView.builder(
               padding: EdgeInsets.all(50),
               physics: NeverScrollableScrollPhysics(),
@@ -111,23 +102,7 @@ class _BodyState extends State<Body> {
                 mainAxisSpacing: 10,
               ),
               itemBuilder: (context, index){
-                return Card(
-                  child: Column(
-                    children: [
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        children: [
-                          Text(_voters![index].id.toString()),
-                          Text(_voters![index].name),
-                        ],
-                      ),
-                      const SizedBox(
-                        height: 20.0,
-                      ),
-                    ],
-                  ),
-                );
-                // return VoterCard(voters: _voters![index]);
+                return VoterCard(voters: _voters![index]);
               }
             ),
             SizedBox(height: 15),
