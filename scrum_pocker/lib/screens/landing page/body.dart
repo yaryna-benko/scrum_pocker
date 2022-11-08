@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:scrum_pocker/components/constrains.dart';
 import 'package:scrum_pocker/components/api_service.dart';
 import 'package:scrum_pocker/models/room.dart';
-import 'package:stop_watch_timer/stop_watch_timer.dart';
+
+//import 'package:stop_watch_timer/stop_watch_timer.dart';
 
 class HBody extends StatefulWidget {
   @override
@@ -10,23 +11,13 @@ class HBody extends StatefulWidget {
 }
 
 class _BodyState extends State<HBody> {
-  final StopWatchTimer _stopWatchTimer = StopWatchTimer();
+  //final StopWatchTimer _stopWatchTimer = StopWatchTimer();
   final _isHours = true;
   bool checkedValue = false;
   Future<VRoom>? _futureRoom;
-   final TextEditingController _controller = TextEditingController();
+  final TextEditingController _controller = TextEditingController();
 
   @override
-  // Future<void> _createVRoom() async {
-  //     VRoom new_room = VRoom(id: 6, room_number: '9051a', scrummaster: 44, lifetime: 11000);
-      
-  //       // Navigator.push(
-  //       //   context,
-  //       //   MaterialPageRoute(builder: (context) =>  HomePage()),
-  //       // );
-  //   }
-
-
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: kPrimaryColor,
@@ -54,58 +45,44 @@ class _BodyState extends State<HBody> {
               ),
             ),
             SizedBox(height: 15),
-            Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[
+            SizedBox(
+              width: MediaQuery.of(context).size.width * 0.6,
+              child:
                 TextField(
                   controller: _controller,
-                  decoration: const InputDecoration(
+                  decoration: InputDecoration(
                     hintText: 'Enter room number',
                     contentPadding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
                     fillColor: Colors.white,
                     filled: true,
-                    // border: borderRadius: BorderRadius.circular(40),
-                    ),
-                ),
-                ElevatedButton(
-                onPressed: () {
-                  setState(() {
-                  _futureRoom = createVRoom(_controller.text);
-                });
-                },
-                child: const Text('Create Data'),
-              ),
-            ],
-          ),
-            // SizedBox(width: MediaQuery.of(context).size.width / 3,
-            // child: TextField(
-            //   cursorWidth: MediaQuery.of(context).size.width / 3,
-            //         decoration: InputDecoration(
-            //           contentPadding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
-            //         fillColor: Colors.white,
-            //         filled: true,
-            //         hintText: "Your nickname",
-            //         border: OutlineInputBorder(
-            //           borderRadius: BorderRadius.circular(40),
-            //         )),
-            //       ),),
-            SizedBox(height: 15),
-            SizedBox(width: MediaQuery.of(context).size.width / 3,
-            child: TextField(
-              cursorWidth: MediaQuery.of(context).size.width / 3,
-                    decoration: InputDecoration(
-                      contentPadding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
-                    fillColor: Colors.white,
-                    filled: true,
-                    hintText: "Room number",
                     border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(40),
-                    )),
-                  ),),
+                    borderRadius: BorderRadius.circular(40),
+                  )
+                  ),
+                )
+            ),
+            SizedBox(height: 15),
+            SizedBox(
+              width: MediaQuery.of(context).size.width * 0.6,
+              child: TextField(
+                decoration: InputDecoration(
+                  contentPadding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
+                  fillColor: Colors.white,
+                  filled: true,
+                  hintText: "Your nickname",
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(40),
+                  )
+                ),
+              ),
+            ),
             SizedBox(height: 15),
             ElevatedButton(
               onPressed: () async{
-                //final VRoom new_room = await createVRoom(7);
+                setState(() {
+                  _futureRoom = putUserInVRoom(_controller.text);
+                  RoomId = _controller.text;});
+                  _futureRoom = createVRoom();
                 Navigator.pushNamed(context, 'room');
               },
               style: ElevatedButton.styleFrom(
