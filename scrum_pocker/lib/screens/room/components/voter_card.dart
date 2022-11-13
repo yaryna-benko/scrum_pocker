@@ -4,15 +4,16 @@ import 'package:flutter/material.dart';
 import '/components/constrains.dart';
 import 'package:scrum_pocker/models/voters.dart';
 
+
  bool pressed = false;
 
 class VoterCard extends StatefulWidget {
   const VoterCard({
     Key? key,
-    required this.voter,
+    required this.voters,
   }) : super(key: key);
 
-  final MyVoters voter;
+  final Voter voters;
 
   @override
   State<VoterCard> createState() => _VoterCardState();
@@ -41,7 +42,7 @@ class _VoterCardState extends State<VoterCard> {
                     alignment: Alignment.topCenter,
                     child: RichText(
                         text: TextSpan(
-                          text: widget.voter.name + '\n\n\n',
+                          text: widget.voters.name + '\n\n\n',
                           style: TextStyle(color: Colors.white, fontSize: 26, fontWeight: FontWeight.bold),
                           children: <TextSpan>[
                             TextSpan(

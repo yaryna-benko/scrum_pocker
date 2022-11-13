@@ -1,16 +1,27 @@
 import 'package:flutter/material.dart';
+import 'package:scrum_pocker/screens/cards/body.dart';
 import 'components/constrains.dart';
 import 'package:scrum_pocker/screens/room/room.dart';
+import 'package:scrum_pocker/screens/result/result.dart';
+import 'package:scrum_pocker/screens/landing page/body.dart';
+import 'package:scrum_pocker/models/voters.dart';
 
 void main() {
   runApp(const MyApp());
 }
 
-class MyApp extends StatelessWidget {
+class MyApp extends StatefulWidget {
   const MyApp({Key? key}) : super(key: key);
 
-  // This widget is the root of your application.
   @override
+  State<MyApp> createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
+  // This widget is the root of your application.
+
+  @override
+
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Home Page',
@@ -18,12 +29,13 @@ class MyApp extends StatelessWidget {
         primaryColor: kPrimaryColor,
         scaffoldBackgroundColor: kPrimaryColor,
       ),
-      home:  Room(),
-      // routes: {
-      //     'home': (context) => Home(),
-      //     'login': (context) =>  Login(),
-      //     'sighup': (context) =>  SighUp(),
-      //   }
+      home:  HBody(),
+      routes: {
+          'cards': (context) => CBody(),
+          'room': (context) =>  Room(),
+          'result': (context) =>  Result(),
+          'home': (context) => HBody(),
+        }
     );
   }
 }

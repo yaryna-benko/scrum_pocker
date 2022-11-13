@@ -8,3 +8,5 @@ const kPrimaryLightColor = Color(0xFFFFFFFF);
 
 
 const double defaultPadding = 16.0;
+
+String RoomId = '';
