@@ -1,43 +1,25 @@
 import 'package:flutter/material.dart';
 import 'package:scrum_pocker/components/constrains.dart';
-import 'voter_card.dart';
-import 'package:scrum_pocker/models/voters.dart';
-import 'package:scrum_pocker/components/api_service.dart';
-import 'package:stop_watch_timer/stop_watch_timer.dart';
+import 'card_card.dart';
+import 'package:scrum_pocker/models/cards.dart';
+import 'package:scrum_pocker/screens/room/room.dart';
 
-class Body extends StatefulWidget {
+class CBody extends StatelessWidget {
+  static String routeName = "/cards";
   @override
-  State<Body> createState() => _BodyState();
-}
-
-class _BodyState extends State<Body> {
-  final StopWatchTimer _stopWatchTimer = StopWatchTimer();
-  final _isHours = true;
-  late List<Voter>? _voters = []; 
-
-  @override
-  void initState(){
-    super.initState();
-    _getData();
-  }
-
-  void _getData() async {
-    _voters = (await ApiService().getUsers())!;
-   Future.delayed(const Duration(seconds: 1)).then((value) => setState(() {}));
-  }
-
   Widget build(BuildContext context) {
-    return SafeArea(
+     return Container(
+      decoration: BoxDecoration(
+        color: kPrimaryColor
+      ),
       child: SingleChildScrollView(
         child: Column(
-          
           children: [
             SizedBox(height: 10),
             Row(
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
                 Icon( Icons.alarm, color: Colors.grey, size: 20,),
-                SizedBox(width: 5),
                 // StreamBuilder<int>(builder: (context, snapshot) {
                 //   stream: _stopWatchTimer.rawTime;
                 //   initialData: _stopWatchTimer.rawTime.value;
@@ -46,13 +28,11 @@ class _BodyState extends State<Body> {
                 //   final displaytime = StopWatchTimer.getDisplayTime(value, hours: _isHours);
                 //   return Text(displaytime, style: TextStyle(fontSize: 20, color: Colors.grey));
                 // }),
-                // Icon ( Icons.clear_rounded, color: kPrimaryButtonColor, size: 20,),
                 TextButton ( 
-                  onPressed: () { Navigator.pushNamed(context, 'home'); },
+                  onPressed: () { Navigator.pushNamed(context, 'room'); },
                   child: Icon(Icons.clear_rounded, color: kPrimaryButtonColor, size: 20,)
                 ),
-                SizedBox(width: 5),
-                Text ( 'Quit', style: TextStyle(fontSize: 20, color: kPrimaryButtonColor),),
+                Text ( 'Quit', style: TextStyle(fontSize: 20, color: kPrimaryButtonColor, fontWeight: FontWeight.normal)),
                 SizedBox(width: 5)
               ],
             ),
@@ -75,7 +55,7 @@ class _BodyState extends State<Body> {
             SizedBox(height: 15),
             ElevatedButton(
               onPressed: (){
-                Navigator.pushNamed(context, 'cards');
+                Navigator.pushNamed(context, 'result');
               },
               style: ElevatedButton.styleFrom(
                 primary: kPrimaryButtonColor,
@@ -87,7 +67,7 @@ class _BodyState extends State<Body> {
                 )
               ),
               child: const Text(
-                'Start voting',
+                'Stop voting',
                 style: TextStyle(fontSize: 14, color: Colors.white),
               )
             ),
@@ -96,13 +76,13 @@ class _BodyState extends State<Body> {
               padding: EdgeInsets.all(50),
               physics: NeverScrollableScrollPhysics(),
               shrinkWrap: true,
-              itemCount: _voters!.length,
+              itemCount: demoCards.length,
               gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: 2,
+                crossAxisCount: 3,
                 mainAxisSpacing: 10,
               ),
               itemBuilder: (context, index){
-                return VoterCard(voters: _voters![index]);
+                return CardCard(card: demoCards[index]);
               }
             ),
             SizedBox(height: 15),
@@ -117,26 +97,3 @@ class _BodyState extends State<Body> {
     );
   }
 }
-
-
-// class VotersGrid extends StatelessWidget{
-//   final List<MyVoters> items; 
-//    VotersGrid({Key? key, required this.items}) : super(key: key); 
-
-//    @override 
-//    Widget build(BuildContext context){
-//     return GridView.builder(
-//       padding: EdgeInsets.all(50),
-//       physics: NeverScrollableScrollPhysics(),
-//       shrinkWrap: true,
-//       itemCount: items.length,
-//       gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-//         crossAxisCount: 2,
-//         mainAxisSpacing: 10,
-//       ),
-//       itemBuilder: (context, index){
-//         return VoterCard(voter: items[index]);
-//       }
-//     );
-//    } 
-// }
