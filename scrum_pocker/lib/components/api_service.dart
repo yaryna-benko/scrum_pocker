@@ -28,7 +28,7 @@ class ApiService {
 }
 
 Future<VRoom> putUserInVRoom(String id) async {
-  var path = 'http://localhost:9654/api/v1/rooms/' + RoomId + '/join/5';
+  var path = 'http://localhost:9654/api/v1/rooms/$RoomId/join/1';
   final response = await http.put(
     Uri.parse(path),
     headers: <String, String>{
@@ -57,7 +57,28 @@ Future<VRoom> createVRoom() async {
   if (response.statusCode == 201) {
     return VRoom.fromJson(jsonDecode(response.toString()));
   } else {
-    throw Exception('Failed to create album.');
+    throw Exception('Failed create room.');
+  }
+
+}
+
+Future<VRoom> leaveUsersInVRoom(String id) async {
+  var path = 'http://localhost:9654/api/v1/rooms/$RoomId/leave/5';
+  final response =  await http.put(
+    Uri.parse(path),
+    headers: <String, String>{
+      'Content-Type': 'application/json; charset=UTF-8',
+    },
+    body: jsonEncode(<String, String>{
+      'id': id,
+    }),
+    );
+  
+
+  if (response.statusCode == 200) {
+    return VRoom.fromJson(json.decode(response.body));
+  } else {
+    throw Exception('Failed to purge room.');
   }
 
 }

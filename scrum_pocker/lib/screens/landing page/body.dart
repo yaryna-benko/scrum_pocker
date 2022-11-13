@@ -15,6 +15,7 @@ class _BodyState extends State<HBody> {
   final _isHours = true;
   bool checkedValue = false;
   Future<VRoom>? _futureRoom;
+  Future<VRoom>? _futureTestRoom;
   final TextEditingController _controller = TextEditingController();
 
   @override
@@ -81,8 +82,8 @@ class _BodyState extends State<HBody> {
               onPressed: () async{
                 setState(() {
                   _futureRoom = putUserInVRoom(_controller.text);
-                  RoomId = _controller.text;});
-                  _futureRoom = createVRoom();
+                  RoomId = _controller.text;
+                  _futureTestRoom = createVRoom();});
                 Navigator.pushNamed(context, 'room');
               },
               style: ElevatedButton.styleFrom(

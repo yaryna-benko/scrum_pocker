@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:scrum_pocker/components/constrains.dart';
 import 'package:scrum_pocker/screens/cards/body.dart';
+import 'package:scrum_pocker/models/room.dart';
 import 'package:scrum_pocker/models/voters.dart';
 import 'package:scrum_pocker/screens/room/components/voter_card.dart';
 import 'package:scrum_pocker/components/api_service.dart';
@@ -14,6 +15,8 @@ class Result extends StatefulWidget {
 
 class _ResultState extends State<Result> {
   List<Voter>? _voters = []; 
+  Future<VRoom>? _futureRoom;
+
 
   @override
 
@@ -49,7 +52,10 @@ class _ResultState extends State<Result> {
                 //   return Text(displaytime, style: TextStyle(fontSize: 20, color: Colors.grey));
                 // }),
                 TextButton ( 
-                  onPressed: () { Navigator.pushNamed(context, 'home'); },
+                  onPressed: () { 
+                    _futureRoom = putUserInVRoom(RoomId);
+                    Navigator.pushNamed(context, 'home'); 
+                    },
                   child: Icon(Icons.clear_rounded, color: kPrimaryButtonColor, size: 20,)
                 ),
                 Text ( 'Quit', style: TextStyle(fontSize: 20, color: kPrimaryButtonColor, fontWeight: FontWeight.normal)),
