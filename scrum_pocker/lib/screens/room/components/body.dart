@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:scrum_pocker/components/constrains.dart';
 import 'voter_card.dart';
@@ -24,6 +26,7 @@ class _BodyState extends State<Body> {
   void _getData() async {
     _voters = (await ApiService().getUsers())!;
    Future.delayed(const Duration(seconds: 1)).then((value) => setState(() {}));
+  // log(_voters.toString());
   }
 
   Widget build(BuildContext context) {

@@ -15,6 +15,7 @@ class ApiService {
       var response = await http.get(url);
       if (response.statusCode == 200) {
         List<Voter> _model = VoterFromJson(response.body);
+       // log(response.body);
         return _model;
       }else {
         log('message');
@@ -23,8 +24,6 @@ class ApiService {
       log(e.toString());
     }
   }
-
-
 }
 
 Future<VRoom> putUserInVRoom(String id) async {

@@ -1,4 +1,5 @@
 import 'dart:ui';
+import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import '/components/constrains.dart';
@@ -46,7 +47,8 @@ class _VoterCardState extends State<VoterCard> {
                           style: TextStyle(color: Colors.white, fontSize: 26, fontWeight: FontWeight.bold),
                           children: <TextSpan>[
                             TextSpan(
-                              text: 'Joined\n\n\n',
+                              text: widget.voters.vote.toString() + '\n\n\n',
+                              //log(),
                               style: TextStyle(color: Colors.white, fontSize: 22, fontStyle: FontStyle.italic),
                             ),
                             // TextSpan(

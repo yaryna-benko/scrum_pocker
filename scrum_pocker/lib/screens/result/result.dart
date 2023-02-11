@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:scrum_pocker/components/constrains.dart';
 import 'package:scrum_pocker/screens/cards/body.dart';
@@ -91,7 +93,7 @@ class _ResultState extends State<Result> {
                   alignment: Alignment.center,
                   child: RichText(
                     text: TextSpan(
-                      //text: iResult().toString(),
+                      text: iResult(),
                       style: TextStyle(color: Colors.white, fontSize: 26, fontWeight: FontWeight.bold),
                     ),
                   ),
@@ -122,16 +124,29 @@ class _ResultState extends State<Result> {
       ),
     );
   }
+
+  String iResult() {
+  var res = 0;
+  int itr = 0;
+  var _voterIteraror = _voters!.iterator;
+  while(_voterIteraror.moveNext()){
+    if(_voterIteraror.current.vote == '?'){
+      res += 0;
+    }else{
+      res += _voters!.elementAt(itr).vote;
+      //log(_voterIteraror.current.vote.toString());
+      log(_voters!.elementAt(1).vote.toString());
+    }
+    itr++;
+  }
+  // for (int i = 0; i < _voters.length; i++){
+  //   if(_voters.elementAt(i).vote == '?'){
+  //     res += 0;
+  //   }else{
+  //     res += int.parse(_voters.elementAt(i).vote);
+  //   }
+  // }
+  return (res/_voters!.length).toString();
+}
 }
 
-// double iResult() {
-//   double res = 0;
-//   for (int i = 0; i < demoVoters.length; i++){
-//     if(demoVoters.elementAt(i).vote == '?'){
-//       res += 0;
-//     }else{
-//       res += int.parse(demoVoters.elementAt(i).vote);
-//     }
-//   }
-//   return res/demoVoters.length;
-// }
