@@ -26,7 +26,7 @@ class Voter {
   final String uid;
   final String name;
   final String created;
-  final int vote;
+  final String vote;
   final String settings;
   final bool is_scrummaster;
 

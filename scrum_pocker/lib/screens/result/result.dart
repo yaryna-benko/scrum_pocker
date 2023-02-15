@@ -133,7 +133,7 @@ class _ResultState extends State<Result> {
     if(_voterIteraror.current.vote == '?'){
       res += 0;
     }else{
-      res += _voters!.elementAt(itr).vote;
+      //res += _voters!.elementAt(itr).vote;
       //log(_voterIteraror.current.vote.toString());
       log(_voters!.elementAt(1).vote.toString());
     }
