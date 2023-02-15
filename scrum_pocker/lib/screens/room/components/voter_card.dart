@@ -15,6 +15,7 @@ class VoterCard extends StatefulWidget {
   }) : super(key: key);
 
   final Voter voters;
+  
 
   @override
   State<VoterCard> createState() => _VoterCardState();
@@ -48,7 +49,6 @@ class _VoterCardState extends State<VoterCard> {
                           children: <TextSpan>[
                             TextSpan(
                               text: widget.voters.vote.toString() + '\n\n\n',
-                              //log(),
                               style: TextStyle(color: Colors.white, fontSize: 22, fontStyle: FontStyle.italic),
                             ),
                             // TextSpan(

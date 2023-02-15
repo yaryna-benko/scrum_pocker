@@ -15,8 +15,8 @@ class Voter {
     required this.id,
     required this.uid,
     required this.name,
-    required this.vote,
     required this.created,
+    required this.vote,
     required this.settings,
     required this.is_scrummaster
 
@@ -25,8 +25,8 @@ class Voter {
   final int id;
   final String uid;
   final String name;
-  final int vote;
   final String created;
+  final int vote;
   final String settings;
   final bool is_scrummaster;
 
@@ -36,8 +36,8 @@ class Voter {
       id: json['id'],
       uid: json['uid'],
       name: json['name'],
-      vote: json['room_id'],
       created: json['created'],
+      vote: json['vote'],
       settings: json['settings'],
       is_scrummaster: json['is_scrummaster']
 
@@ -47,8 +47,8 @@ class Voter {
         "id": id,
         "uid": uid,
         "name": name,
-        "vote": vote,
         "created": created,
+        "vote": vote,
         "settings": settings,
         "is_scrummaster": is_scrummaster
       };
