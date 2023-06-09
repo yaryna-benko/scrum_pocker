@@ -1,5 +1,5 @@
 import 'dart:developer';
-
+import 'package:qr_flutter/qr_flutter.dart';
 import 'package:flutter/material.dart';
 import 'package:scrum_pocker/components/constrains.dart';
 import 'voter_card.dart';
@@ -26,7 +26,7 @@ class _BodyState extends State<Body> {
   void _getData() async {
     _voters = (await ApiService().getUsers())!;
    Future.delayed(const Duration(seconds: 1)).then((value) => setState(() {}));
-  // log(_voters.toString());
+  log(_voters.toString());
   }
 
   Widget build(BuildContext context) {
@@ -60,16 +60,22 @@ class _BodyState extends State<Body> {
               ],
             ),
             SizedBox(height: 15),
+            QrImage(
+              data: ApiConstants.baseUrl,
+              version: QrVersions.auto,
+              size: 200.0,
+            ),
+            SizedBox(height: 20.0),
             Container(
               padding: EdgeInsets.only( top: 80),
                 child: RichText(
                 text: TextSpan(
                   text: 'Room: ',
-                    style: TextStyle(color: Colors.white, fontSize: 26),
+                    style: TextStyle(color: kPrimaryTextColor, fontSize: 26),
                     children: <TextSpan>[
                       TextSpan(
-                        text: 'Rrr',
-                        style: TextStyle(color: Colors.white, fontSize: 26, fontWeight: FontWeight.bold),
+                        text: '0005',
+                        style: TextStyle(color: kPrimaryTextColor, fontSize: 26, fontWeight: FontWeight.bold),
                       )
                     ]
                 ),
@@ -122,24 +128,3 @@ class _BodyState extends State<Body> {
 }
 
 
-// class VotersGrid extends StatelessWidget{
-//   final List<MyVoters> items; 
-//    VotersGrid({Key? key, required this.items}) : super(key: key); 
-
-//    @override 
-//    Widget build(BuildContext context){
-//     return GridView.builder(
-//       padding: EdgeInsets.all(50),
-//       physics: NeverScrollableScrollPhysics(),
-//       shrinkWrap: true,
-//       itemCount: items.length,
-//       gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-//         crossAxisCount: 2,
-//         mainAxisSpacing: 10,
-//       ),
-//       itemBuilder: (context, index){
-//         return VoterCard(voter: items[index]);
-//       }
-//     );
-//    } 
-// }

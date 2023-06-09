@@ -3,37 +3,60 @@ import 'package:scrum_pocker/components/constrains.dart';
 import 'package:scrum_pocker/components/api_service.dart';
 import 'package:scrum_pocker/models/room.dart';
 
-//import 'package:stop_watch_timer/stop_watch_timer.dart';
 
 class HBody extends StatefulWidget {
   @override
   State<HBody> createState() => _BodyState();
 }
 
+  
+
 class _BodyState extends State<HBody> {
-  //final StopWatchTimer _stopWatchTimer = StopWatchTimer();
   final _isHours = true;
   bool checkedValue = false;
   Future<VRoom>? _futureRoom;
   Future<VRoom>? _futureTestRoom;
   final TextEditingController _controller = TextEditingController();
 
+    void toggleColorMode() {
+    setState(() {
+      isNightModeEnabled = !isNightModeEnabled;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: kPrimaryColor,
+      backgroundColor: isNightModeEnabled ? kPrimaryDarkColor : Colors.white,
       body: SingleChildScrollView(
         child: Column(   
           children: [
             SizedBox(height: 10),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.end,
-              children: [
-                // Icon ( Icons.clear_rounded, color: kPrimaryButtonColor, size: 20,),
-                // SizedBox(width: 5),
-                // Text ( 'Quit', style: TextStyle(fontSize: 20, color: kPrimaryButtonColor, fontWeight: FontWeight.normal),),
-                // SizedBox(width: 5)
-              ],
+            Container(
+              color: isNightModeEnabled ? kPrimaryDarkColor : Colors.white,
+              child: Center(
+                child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                ElevatedButton(
+                  onPressed: toggleColorMode,
+                  style: ElevatedButton.styleFrom(
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                    backgroundColor: isNightModeEnabled ? Colors.white : kPrimaryButtonColor
+                  ),
+                  child: Text(
+                    isNightModeEnabled ? 'Switch to Day Mode' : 'Switch to Night Mode',
+                    style: TextStyle(
+                      fontSize: 18.0,
+                      color: isNightModeEnabled ? kPrimaryButtonColor : Colors.white,
+                    ),
+                  ),
+                ),
+                ],
+                ),
+              ),
             ),
             SizedBox(height: 15),
             Container(
@@ -41,7 +64,7 @@ class _BodyState extends State<HBody> {
                 child: RichText(
                 text: TextSpan(
                   text: 'Welcome! ',
-                    style: TextStyle(color: Colors.white, fontSize: 26),
+                    style: TextStyle(color: isNightModeEnabled ? Colors.white : kPrimaryButtonColor, fontSize: 26),
                 ),
               ),
             ),
@@ -57,7 +80,7 @@ class _BodyState extends State<HBody> {
                     fillColor: Colors.white,
                     filled: true,
                     border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(40),
+                      borderRadius: BorderRadius.circular(40),
                   )
                   ),
                 )
@@ -80,24 +103,28 @@ class _BodyState extends State<HBody> {
             SizedBox(height: 15),
             ElevatedButton(
               onPressed: () async{
+                sessionsCount++;
                 setState(() {
-                  _futureRoom = putUserInVRoom(_controller.text);
+                  _futureRoom = ApiService().putUserInVRoom(_controller.text);
                   RoomId = _controller.text;
-                  _futureTestRoom = createVRoom();});
+                  _futureTestRoom = ApiService().createVRoom();});
                 Navigator.pushNamed(context, 'room');
               },
               style: ElevatedButton.styleFrom(
-                primary: kPrimaryButtonColor,
-                surfaceTintColor: kPrimaryButtonColor,
+                backgroundColor: isNightModeEnabled ? Colors.white : kPrimaryButtonColor,
+                //surfaceTintColor: kPrimaryButtonColor,
                 minimumSize: Size(300, 55),
                 padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
                 shape:RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(10),
                 )
               ),
-              child: const Text(
+              child: Text(
                 'Join room',
-                style: TextStyle(fontSize: 14, color: Colors.white),
+                style: TextStyle(
+                  fontSize: 14, 
+                  color: isNightModeEnabled ? kPrimaryButtonColor : Colors.white,
+                ),
               )
             ),
             SizedBox(height: 15),

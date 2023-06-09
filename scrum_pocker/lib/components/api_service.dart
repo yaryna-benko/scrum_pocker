@@ -11,6 +11,7 @@ class ApiService {
   Future<List<Voter>?> getUsers() async {
     try {
       var path = 'http://localhost:9654/api/v1/rooms/' + RoomId + '/getUsers';
+      // var path = 'http://localhost:9654/api/v1/rooms/1/getUsers';
       var url = Uri.parse(path);
       var response = await http.get(url);
       if (response.statusCode == 200) {
@@ -24,10 +25,28 @@ class ApiService {
       log(e.toString());
     }
   }
-}
+
+Future<List<VRoom>?> getRooms() async {
+    try {
+      var path = 'http://localhost:9654/api/v1/rooms';
+      var url = Uri.parse(path);
+      var response = await http.get(url);
+      if (response.statusCode == 200) {
+        List<VRoom> _model = VRoomFromJson(response.body);
+       // log(response.body);
+        return _model;
+      }else {
+        log('message');
+      }
+    } catch (e) {
+      log(e.toString());
+    }
+  }
+
+
 
 Future<VRoom> putUserInVRoom(String id) async {
-  var path = 'http://localhost:9654/api/v1/rooms/$RoomId/join/1';
+  var path = 'http://localhost:9654/api/v1/rooms/$RoomId/join/6';
   final response = await http.put(
     Uri.parse(path),
     headers: <String, String>{
@@ -38,11 +57,11 @@ Future<VRoom> putUserInVRoom(String id) async {
     }),
   );
 
-  if (response.statusCode == 200) {
+  // if (response.statusCode != 404) {
     return VRoom.fromJson(json.decode(response.body));
-  } else {
-    throw Exception('Failed to put user in room');
-  }
+  // } else {
+  //   throw Exception('Failed to put user in room');
+  // }
 }
 
 Future<VRoom> createVRoom() async {
@@ -53,11 +72,11 @@ Future<VRoom> createVRoom() async {
     },);
   
 
-  if (response.statusCode == 201) {
+  // if (response.statusCode == 200) {
     return VRoom.fromJson(jsonDecode(response.toString()));
-  } else {
-    throw Exception('Failed create room.');
-  }
+  // } else {
+  //   throw Exception('Failed create room.');
+  // }
 
 }
 
@@ -81,7 +100,9 @@ Future<VRoom> leaveUsersInVRoom(String id) async {
   }
 
 }
+}
 
 class ApiConstants {
   static String baseUrl = "http://localhost:9654/api/v1";
 }
+

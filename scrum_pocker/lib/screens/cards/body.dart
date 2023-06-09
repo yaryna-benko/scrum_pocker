@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:scrum_pocker/components/constrains.dart';
+import 'package:scrum_pocker/components/timer.dart';
 import 'card_card.dart';
 import 'package:scrum_pocker/models/cards.dart';
 import 'package:scrum_pocker/screens/room/room.dart';
@@ -19,15 +20,8 @@ class CBody extends StatelessWidget {
             Row(
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
-                Icon( Icons.alarm, color: Colors.grey, size: 20,),
-                // StreamBuilder<int>(builder: (context, snapshot) {
-                //   stream: _stopWatchTimer.rawTime;
-                //   initialData: _stopWatchTimer.rawTime.value;
-                //   _stopWatchTimer.execute;
-                //   final value = snapshot.data;
-                //   final displaytime = StopWatchTimer.getDisplayTime(value, hours: _isHours);
-                //   return Text(displaytime, style: TextStyle(fontSize: 20, color: Colors.grey));
-                // }),
+                Icon( Icons.alarm, color: Colors.grey, size: 20),
+                CountdownTimer(),
                 TextButton ( 
                   onPressed: () { Navigator.pushNamed(context, 'room'); },
                   child: Icon(Icons.clear_rounded, color: kPrimaryButtonColor, size: 20,)

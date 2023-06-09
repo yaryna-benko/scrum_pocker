@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:scrum_pocker/screens/cards/body.dart';
+import 'package:scrum_pocker/screens/sessions/session.dart';
 import 'components/constrains.dart';
 import 'package:scrum_pocker/screens/room/room.dart';
 import 'package:scrum_pocker/screens/result/result.dart';
 import 'package:scrum_pocker/screens/landing page/body.dart';
-import 'package:scrum_pocker/models/voters.dart';
 
 void main() {
   runApp(const MyApp());
@@ -18,7 +18,7 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  // This widget is the root of your application.
+
 
   @override
 
@@ -26,8 +26,8 @@ class _MyAppState extends State<MyApp> {
     return MaterialApp(
       title: 'Home Page',
       theme: ThemeData(
-        primaryColor: kPrimaryColor,
-        scaffoldBackgroundColor: kPrimaryColor,
+        primaryColor: Colors.white,
+        scaffoldBackgroundColor: Colors.white,
       ),
       home:  HBody(),
       routes: {
@@ -35,6 +35,7 @@ class _MyAppState extends State<MyApp> {
           'room': (context) =>  Room(),
           'result': (context) =>  Result(),
           'home': (context) => HBody(),
+          'sessions': (context) => SessionScreen()
         }
     );
   }

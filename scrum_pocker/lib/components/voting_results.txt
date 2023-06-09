@@ -1,0 +1,23 @@
+23:37:15 Thu 8 Jun
+Number of sessions today: 3
+Most active participants for today: steve and duncan
+
+23:38:48 Thu 8 Jun
+Number of sessions today: 4
+Most active participants for today: steve and duncan
+
+23:42:01 Thu 8 Jun
+Number of sessions today: 7
+Most active participants for today: steve and duncan
+
+24:07:58 Fri 9 Jun
+Number of sessions today: 1
+Most active participants for today: 
+
+24:09:03 Fri 9 Jun
+Number of sessions today: 2
+Most active participants for today: yara
+
+24:11:32 Fri 9 Jun
+Number of sessions today: 3
+Most active participants for today: yara and steve

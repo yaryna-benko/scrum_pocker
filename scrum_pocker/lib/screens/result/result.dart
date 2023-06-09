@@ -1,8 +1,8 @@
 import 'dart:developer';
-
+import 'dart:io';
+import 'package:intl/intl.dart';
 import 'package:flutter/material.dart';
 import 'package:scrum_pocker/components/constrains.dart';
-import 'package:scrum_pocker/screens/cards/body.dart';
 import 'package:scrum_pocker/models/room.dart';
 import 'package:scrum_pocker/models/voters.dart';
 import 'package:scrum_pocker/screens/room/components/voter_card.dart';
@@ -21,21 +21,51 @@ class _ResultState extends State<Result> {
 
 
   @override
-
+  
   void initState(){
     super.initState();
     _getData();
+    _loadVotingResult();
+  }
+
+
+  void _loadVotingResult() async {
+    try {
+      final file = File('scrum_pocker/lib/components/voting_results.txt');
+      if (await file.exists()) {
+        String contents = await file.readAsString();
+        // setState(() {
+        //   _voteCount = int.parse(contents);
+        // });
+      } else {
+        //log('no file');
+      }
+    } catch (e) {
+      print('Error loading vote count: $e');
+    }
+  }
+  void _saveVoteCount() async {
+      final file = File('scrum_pocker/lib/components/voting_results.txt');
+      await file.writeAsString(_voters.toString() + '\n');
+      await file.writeAsString(iResult() + '\n' + DateTime.now().toString() + '\n');
   }
 
   void _getData() async {
     _voters = (await ApiService().getUsers())!;
     Future.delayed(const Duration(seconds: 1)).then((value) => setState(() {}));
+
+  }
+
+  void toggleColorMode() {
+    setState(() {
+      isNightModeEnabled = !isNightModeEnabled;
+    });
   }
 
   Widget build(BuildContext context) {
      return Container(
       decoration: BoxDecoration(
-        color: kPrimaryColor
+        color: isNightModeEnabled ? kPrimaryDarkColor : Colors.white
       ),
       child: SingleChildScrollView(
         child: Column(
@@ -55,14 +85,67 @@ class _ResultState extends State<Result> {
                 // }),
                 TextButton ( 
                   onPressed: () { 
-                    _futureRoom = putUserInVRoom(RoomId);
+                    //_futureRoom = ApiService().putUserInVRoom(RoomId);
                     Navigator.pushNamed(context, 'home'); 
                     },
                   child: Icon(Icons.clear_rounded, color: kPrimaryButtonColor, size: 20,)
                 ),
-                Text ( 'Quit', style: TextStyle(fontSize: 20, color: kPrimaryButtonColor, fontWeight: FontWeight.normal)),
+                Text ( 'Quit', style: TextStyle(fontSize: 20, color: isNightModeEnabled ? Colors.white : kPrimaryButtonColor, fontWeight: FontWeight.normal)),
                 SizedBox(width: 5)
               ],
+            ),
+            Container(
+              color: isNightModeEnabled ? kPrimaryDarkColor : Colors.white,
+              child: Center(
+                child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                ElevatedButton(
+                  onPressed: toggleColorMode,
+                  style: ElevatedButton.styleFrom(
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                    backgroundColor: isNightModeEnabled ? Colors.white : kPrimaryButtonColor
+                  ),
+                  child: Text(
+                    isNightModeEnabled ? 'Switch to Day Mode' : 'Switch to Night Mode',
+                    style: TextStyle(
+                      fontSize: 18.0,
+                      color: isNightModeEnabled ? kPrimaryButtonColor : Colors.white,
+                    ),
+                  ),
+                ),
+                ],
+                ),
+              ),
+            ),
+            SizedBox(height: 15),
+            Container(
+              color: isNightModeEnabled ? kPrimaryDarkColor : Colors.white,
+              child: Center(
+                child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                ElevatedButton(
+                  onPressed: (){Navigator.pushNamed(context, 'sessions'); },
+                  style: ElevatedButton.styleFrom(
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                    backgroundColor: isNightModeEnabled ? Colors.white : kPrimaryButtonColor
+                  ),
+                  child: Text(
+                    'See sessions statistics',
+                    style: TextStyle(
+                      fontSize: 18.0,
+                      color: isNightModeEnabled ? kPrimaryButtonColor : Colors.white,
+                    ),
+                  ),
+                ),
+                ],
+                ),
+              ),
             ),
             SizedBox(height: 15),
             Container(
@@ -70,11 +153,11 @@ class _ResultState extends State<Result> {
                 child: RichText(
                 text: TextSpan(
                   text: 'Room: ',
-                    style: TextStyle(color: Colors.white, fontSize: 26),
+                    style: TextStyle(color: isNightModeEnabled ? Colors.white : kPrimaryButtonColor, fontSize: 26),
                     children: <TextSpan>[
                       TextSpan(
-                        text: 'Rrr',
-                        style: TextStyle(color: Colors.white, fontSize: 26, fontWeight: FontWeight.bold),
+                        text: '0005',
+                        style: TextStyle(color: isNightModeEnabled ? Colors.white : kPrimaryButtonColor, fontSize: 26, fontWeight: FontWeight.bold),
                       )
                     ]
                 ),
@@ -92,9 +175,16 @@ class _ResultState extends State<Result> {
                 child: Container(
                   alignment: Alignment.center,
                   child: RichText(
+                    textAlign: TextAlign.center,
                     text: TextSpan(
                       text: iResult(),
                       style: TextStyle(color: Colors.white, fontSize: 26, fontWeight: FontWeight.bold),
+                      children: <TextSpan>[
+                        TextSpan(
+                          text:'\nNumber of sessions today: ${sessionsCount}',
+                          style: TextStyle(color: Colors.white, fontSize: 26, fontWeight: FontWeight.bold),
+                        ),
+                      ]
                     ),
                   ),
                 ),
@@ -113,28 +203,29 @@ class _ResultState extends State<Result> {
                 return VoterCard(voters: _voters![index]);
               }
             ),
-            SizedBox(height: 15),
-            // Container(
-            //   padding: EdgeInsets.all(10),
-            //   width: MediaQuery.of(context).size.width / 3,
-            //   child:  Image.asset('assets/icons/logo.png'),
-            // )
           ],
         ),
       ),
     );
   }
 
+String DateAndTime(){
+  DateTime now = DateTime.now();
+  return DateFormat('kk:mm:ss EEE d MMM').format(now).toString();
+}
+
   String iResult() {
   var res = 0;
   int itr = 0;
+  int nullVotes = 0;
   var _voterIteraror = _voters!.iterator;
   while(_voterIteraror.moveNext()){
-    if(_voterIteraror.current.vote == '?'){
+    if(_voterIteraror.current.vote == '?' || _voterIteraror.current.vote == null){
       res += 0;
+      nullVotes++;
     }else{
-      //res += _voters!.elementAt(itr).vote;
-      //log(_voterIteraror.current.vote.toString());
+      res += int.parse(_voters!.elementAt(itr).vote);
+      log(_voterIteraror.current.vote.toString());
       log(_voters!.elementAt(1).vote.toString());
     }
     itr++;
@@ -146,7 +237,7 @@ class _ResultState extends State<Result> {
   //     res += int.parse(_voters.elementAt(i).vote);
   //   }
   // }
-  return (res/_voters!.length).toString();
+  return (res/(_voters!.length - 1)).toString();
 }
 }
 
